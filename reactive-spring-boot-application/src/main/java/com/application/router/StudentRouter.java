@@ -7,9 +7,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.RouterFunctions;
 import org.springframework.web.reactive.function.server.ServerResponse;
-
 import com.application.handler.StudentHandler;
-
 import static org.springframework.web.reactive.function.server.RequestPredicates.GET;
 import static org.springframework.web.reactive.function.server.RequestPredicates.accept;
 
@@ -26,5 +24,8 @@ public class StudentRouter {
 
 		return RouterFunctions.route(GET("/findStudents").and(accept(MediaType.APPLICATION_JSON)),
 				studentHandler::getAllStudents);
+				
+
 	}
+
 }

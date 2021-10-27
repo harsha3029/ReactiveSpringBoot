@@ -3,6 +3,8 @@ package com.application.service.student;
 import com.application.dataaccessobject.StudentRepository;
 import com.application.domainobject.StudentDO;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +29,7 @@ public class StudentServiceImpl implements StudentService
 
 
     @Override
-    public StudentDO getAll()
+    public List<StudentDO> getAll()
     {
         return studentRepository.getAll();
     }

@@ -1,6 +1,6 @@
 package com.application.datatransferobject;
 
-import org.springframework.stereotype.Component;
+import java.util.List;
 
 public class StudentDTO {
 
@@ -9,7 +9,16 @@ public class StudentDTO {
 	private String emailId;
 	private String address;
 	private String phoneNumber;
+	private List<StudentDTO> students;
 	
+	public List<StudentDTO> getStudents() {
+		return students;
+	}
+
+	public void setStudents(List<StudentDTO> students) {
+		this.students = students;
+	}
+
 	public StudentDTO()
 	{
 		

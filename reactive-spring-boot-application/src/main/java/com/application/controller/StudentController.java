@@ -1,7 +1,15 @@
 package com.application.controller;
 
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
+
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,7 +19,7 @@ import com.application.domainobject.StudentDO;
 import com.application.service.student.StudentService;
 
 @RestController
-@RequestMapping("/findStudents")
+
 public class StudentController {
 
 	private final StudentService studentService;
@@ -21,11 +29,33 @@ public class StudentController {
 		this.studentService = studentService;
 	}
 
-	@GetMapping
-	public StudentDTO findStudents() {
-		StudentDTO studentDTO = new StudentDTO();
-		StudentDO studentDO = studentService.getAll();
-		BeanUtils.copyProperties(studentDO, studentDTO);
-		return studentDTO;
+	@RequestMapping("/findStudents")
+	public List<StudentDTO> findStudents() {
+		List<StudentDTO> listStudent = new ArrayList<StudentDTO>();
+		List<StudentDO> studentDO = studentService.getAll();
+		studentDO.forEach(e -> {
+			StudentDTO studentDTO = new StudentDTO();
+			studentDTO.setFirstName(e.getFirstName());
+			studentDTO.setLastName(e.getLastName());
+			studentDTO.setEmailId(e.getEmailId());
+			studentDTO.setAddress(e.getAddress());
+			studentDTO.setPhoneNumber(e.getPhoneNumber());
+			BeanUtils.copyProperties(studentDO, studentDTO);
+			listStudent.add(studentDTO);
+		});
+		return listStudent;
 	}
+
+	@GetMapping("/exportCSV")
+	public void exportCSV(@Param("result") String result) throws Exception {
+		String fileName = "Students.csv";
+		File f=new File(".");
+		String path=f.getAbsolutePath();
+		Path filePath = Path.of(path+"/"+fileName);
+		Files.writeString(filePath, "");
+		Files.writeString(filePath, result);
+
+
+	}
+
 }
